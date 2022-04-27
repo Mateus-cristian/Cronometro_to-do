@@ -13,6 +13,7 @@ export default function index() {
       </div>
       <div className={style.inputContainer}>
         <label htmlFor="time">
+          Time
           <input
             type="time"
             name="time"
@@ -24,7 +25,7 @@ export default function index() {
           ></input>
         </label>
       </div>
-      <Button />
+      <Button text="Adicionar" />
     </form>
   );
 }
