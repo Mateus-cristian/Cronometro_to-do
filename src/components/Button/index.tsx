@@ -4,10 +4,11 @@ import style from "./Button.module.scss";
 export default function index(props: {
   text: string;
   type?: "button" | "submit" | "reset" | undefined;
+  onClick?: () => void;
 }) {
-  const { text, type = "button" } = props;
+  const { text, type = "button", onClick } = props;
   return (
-    <button type={type} className={style.button}>
+    <button onClick={onClick} type={type} className={style.button}>
       {text}
     </button>
   );
