@@ -4,39 +4,42 @@ import Button from "../Button";
 import style from "./Form.module.scss";
 import { v4 as uuidv4 } from "uuid";
 
-export default class Form extends React.Component<{
-  setTasks: React.Dispatch<React.SetStateAction<iTasks[]>>;
-}> {
-  state = {
-    task: "",
-    time: "00:00:00",
-  };
+interface Props {
+    setTasks: React.Dispatch<React.SetStateAction<iTasks[]>>
+}
 
-  saveTask(event: React.FormEvent<HTMLFormElement>) {
+export default function Form({setTasks}:Props) {
+  
+  const [task,setTask] = useState('');
+  const [time,setTime] = useState('00:00');
+
+  function saveTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    this.props.setTasks((tasksOlds) => [
+    setTasks((tasksOlds) => [
       ...tasksOlds,
       {
-        ...this.state,
+        task,
+        time,
         selected: false,
         complete: false,
         id: uuidv4(),
       },
     ]);
-    this.setState({ task: "", time: "00:00" });
+    setTask("")
+    setTime("00:00")
   }
 
-  render() {
+
     return (
-      <form className={style.newTask} onSubmit={this.saveTask.bind(this)}>
+      <form className={style.newTask} onSubmit={saveTask}>
         <div className={style.inputContainer}>
           <label htmlFor="task">
             Add a new task
             <input
               type="text"
-              value={this.state.task}
+              value={task}
               onChange={(event) =>
-                this.setState({ ...this.state, task: event.target.value })
+                setTask(event.target.value)
               }
               name="task"
               id="task"
@@ -51,9 +54,9 @@ export default class Form extends React.Component<{
               type="time"
               name="time"
               id="time"
-              value={this.state.time}
+              value={time}
               onChange={(event) =>
-                this.setState({ ...this.state, time: event.target.value })
+                setTime(event.target.value )
               }
               step="1"
               min="00:00:00"
@@ -66,4 +69,4 @@ export default class Form extends React.Component<{
       </form>
     );
   }
-}
+
